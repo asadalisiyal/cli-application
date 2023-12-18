@@ -18,18 +18,29 @@ fn main() {
 
 
     // The Index 0 will be the name of program
-    let pattern = std::env::args().nth(1).expect("no pattern given"); 
-    let path = std::env::args().nth(2).expect("no path given"); 
+    // let pattern = std::env::args().nth(1).expect("no pattern given"); 
+    // let path = std::env::args().nth(2).expect("no path given"); 
 
-    let args = Cli {
-        pattern: pattern, 
-        path: std::path::PathBuf::from(path), 
-    }; 
+    // let args = Cli {
+    //     pattern: pattern, 
+    //     path: std::path::PathBuf::from(path), 
+    // }; 
 
 
+    // This will be getting 2 arguments by using command and it will store into struct. 
+    let args = Cli::parse(); 
+
+
+    // Now reading the File
+    let content = std::fs::read_to_string(&args.path).expect("was unable to read File"); 
+
+    for line in content.lines() {
+        if line.contains(&args.pattern) {
+            println!("{}", line); 
+        }
+    }
 
     println!("The pattern is {:?} and path is {:?} ", args.pattern, args.path); 
-
 
 
 }   
